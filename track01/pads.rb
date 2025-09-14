@@ -2,6 +2,7 @@ use_bpm 300
 live_loop :atmospheric_pads do
   sync :main_melody
   loop_num = get[:global_loop_count] || 0
+
   puts "Atmospheric pads - loop_num: #{loop_num}"
 
   if loop_num >= 6 && loop_num <= 15 # Fade in from loop 6, end before breakdown
@@ -37,6 +38,7 @@ end
 live_loop :deep_pads do
   sync :main_melody
   loop_num = get[:global_loop_count] || 0
+
   use_synth :prophet
 
   if loop_num >= 8 && loop_num <= 15 # Start after atmospheric pads are established

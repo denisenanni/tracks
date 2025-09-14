@@ -3,8 +3,10 @@ use_bpm 300
 live_loop :arpeggios do
   sync :main_melody
   loop_num = get[:global_loop_count]
+
   puts "Arpeggios - loop_num: #{loop_num}"
   use_synth :pluck
+
 
   if loop_num >= 8 && loop_num < 16
     #2
@@ -30,7 +32,7 @@ live_loop :arpeggios do
         sleep 0.125
 
         # Rest and repeat pattern with variation
-        sleep 0.5
+        sleep 0.499
 
         # Second phrase - different rhythm
         [0, 1, 2, 1, 3, 2].each do |note_idx|
@@ -38,7 +40,7 @@ live_loop :arpeggios do
           sleep 0.25
         end
 
-        sleep 1.5
+        sleep 1.499
       end
     end
   else
@@ -72,6 +74,8 @@ live_loop :arpeggios do
           sleep 8 - notes.length
         end
       end
+    elsif loop_num >= 60
+      sleep 8
     else
       #1 & #3
       sleep 8
@@ -82,6 +86,7 @@ end
 live_loop :call_response_arps do
   sync :main_melody
   loop_num = get[:global_loop_count]
+
   use_synth :pluck
 
   puts "Call-Response Arps - loop_num: #{loop_num}"
@@ -150,6 +155,8 @@ live_loop :call_response_arps do
       end
       sleep 1  # Final melody note - no response
     end
+  elsif loop_num >= 60
+    sleep 8
   else
     #1 & #3
     sleep 8
@@ -159,6 +166,7 @@ end
 live_loop :rhythmic_response_arps do
   sync :main_melody
   loop_num = get[:global_loop_count]
+
   use_synth :fm
 
   if loop_num >= 12 && loop_num < 16 # Later in the section for variation
@@ -215,7 +223,9 @@ live_loop :rhythmic_response_arps do
       sleep 0.166
     end
     sleep 3.5  # Total = 8 beats
-  else
+    elsif loop_num >= 60
+      sleep 8
+  else 
     #1 & #3
     sleep 8
   end
@@ -260,6 +270,8 @@ live_loop :build_arps do
         end
       end
     end
+  elsif loop_num >= 60
+    sleep 8
   else
     #1
     sleep 8
@@ -269,6 +281,7 @@ end
 live_loop :breakdown_arps do
   sync :main_melody
   loop_num = get[:global_loop_count]
+
 
   if loop_num >= 16 && loop_num <= 19 # During your breakdown
     use_synth :hollow
@@ -290,6 +303,7 @@ end
 live_loop :filter_madness do
   sync :main_melody
   loop_num = get[:global_loop_count]
+
 
   if loop_num >= 32 && loop_num < 38
     use_synth :saw

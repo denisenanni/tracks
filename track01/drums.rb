@@ -3,44 +3,50 @@ use_bpm 300
 live_loop :hats do
   sync :main_melody
   loop_num = get[:global_loop_count] || 0
-  puts "HATS - loop_num: #{loop_num}"
-  if loop_num >= 1 && loop_num < 32
-    if loop_num >= 16 && loop_num <= 19
-      #3 BREAK
-      puts "HATS - BREAKDOWN MODE #{loop_num},"
-      sleep 8
-    elsif loop_num <= 4 # First 4 times this hats loop runs
-      #1
-      puts "HATS - INITIAL MODE (8 hits) #{loop_num}"
-      8.times do
-        sample :drum_cymbal_closed, amp: rrand(0.3, 0.6)
-        sleep 0.5
+
+
+  if loop_num < 60
+
+    puts "HATS - loop_num: #{loop_num}"
+    if loop_num >= 1 && loop_num < 32
+      if loop_num >= 16 && loop_num <= 19
+        #3 BREAK
+        puts "HATS - BREAKDOWN MODE #{loop_num},"
+        sleep 8
+      elsif loop_num <= 4
+        #1
+        puts "HATS - INITIAL MODE (8 hits) #{loop_num}"
+        8.times do
+          sample :drum_cymbal_closed, amp: rrand(0.3, 0.6)
+          sleep 0.5
+        end
+      else
+        #2 & #4
+        puts "HATS - CONTINUOUS MODE (16 hits) #{loop_num}"
+        16.times do # 16 times
+          sample :drum_cymbal_closed, amp: rrand(0.3, 0.6)
+          sleep 0.499
+        end
       end
-      # sleep 4  # 8 * 0.5 = 4, so sleep 4 more for total 8
-    else
-      #2 & #4
-      puts "HATS - CONTINUOUS MODE (16 hits) #{loop_num}"
-      16.times do # 16 times
+    elsif loop_num >= 38 && loop_num < 42 
+      #6
+      puts "HATS - RETURN MODE #{loop_num}"
+      8.times do
+        sample :drum_cymbal_closed, amp: rrand(0.4, 0.7), rate: rrand(0.9, 1.1)
+        sleep 0.99  # Slower
+      end
+    elsif loop_num >= 45
+      #8 Return
+      puts "HATS - FINAL MODE #{loop_num}"
+      16.times do
         sample :drum_cymbal_closed, amp: rrand(0.3, 0.6)
         sleep 0.499
       end
-    end
-  elsif loop_num >= 38 && loop_num < 42 # Brief return after filter madness
-    #6
-    puts "HATS - RETURN MODE #{loop_num}"
-    8.times do
-      sample :drum_cymbal_closed, amp: rrand(0.4, 0.7), rate: rrand(0.9, 1.1)
-      sleep 0.99  # Slower, more spacious
-    end
-  elsif loop_num >= 45
-    #8 Return
-    puts "HATS - FINAL MODE #{loop_num}"
-    16.times do
-      sample :drum_cymbal_closed, amp: rrand(0.3, 0.6)
-      sleep 0.499
+    else
+      #5 & #7
+      sleep 8
     end
   else
-    #5 & #7
     sleep 8
   end
 end
@@ -49,8 +55,8 @@ live_loop :kicks do
   sync :main_melody
   loop_num = get[:global_loop_count]
   puts "Loop count: #{loop_num}"
-
-  if loop_num >= 1
+  
+  if loop_num >= 1 && loop_num < 60
     if loop_num >= 16 && loop_num <= 19
       #3 BREAK
       sleep 8
@@ -75,7 +81,7 @@ live_loop :kicks do
       sample :bd_haus, amp: 0.9
       sleep 2
       sample :bd_haus, amp: 0.8, rate: 0.9
-      sleep 2
+      sleep 1.99
     else
       #2 & #4 & #6
       1.times do
@@ -94,10 +100,14 @@ live_loop :kicks do
   end
 end
 
+
+
 live_loop :snare_clap do
   sync :main_melody
   loop_num = get[:global_loop_count]
+
   puts "Snare/clap - loop_num: #{loop_num}"
+if loop_num < 60
 
   if loop_num >= 20
     #2
@@ -105,10 +115,13 @@ live_loop :snare_clap do
     sample :drum_snare_hard, amp: 0.7, pan: rrand(-0.3, 0.3)  # Beat 2
     sleep 4
     sample :drum_snare_hard, amp: 0.8, pan: rrand(-0.3, 0.3)  # Beat 4
-    sleep 2
+    sleep 1.99
   else
     #1
     sleep 8  # Silent during intro
+  end
+  else
+    sleep 8
   end
 end
 
